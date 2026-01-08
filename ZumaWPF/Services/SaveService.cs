@@ -32,7 +32,8 @@ public class SaveService
                 Username = root.Element("Username")?.Value ?? "",
                 Score = int.Parse(root.Element("Score")?.Value ?? "0"),
                 Level = int.Parse(root.Element("Level")?.Value ?? "1"),
-                ChainProgress = double.Parse(root.Element("ChainProgress")?.Value ?? "0")
+                ChainProgress = double.Parse(root.Element("ChainProgress")?.Value ?? "0"),
+                NextBallIndex = int.Parse(root.Element("NextBallIndex")?.Value ?? "0")
             };
             
             var ballsElement = root.Element("ChainBalls");
@@ -44,7 +45,8 @@ public class SaveService
                         Color = e.Element("Color")?.Value ?? Colors.Red.ToString(),
                         PositionX = double.Parse(e.Element("PositionX")?.Value ?? "0"),
                         PositionY = double.Parse(e.Element("PositionY")?.Value ?? "0"),
-                        Index = int.Parse(e.Element("Index")?.Value ?? "0")
+                        Index = int.Parse(e.Element("Index")?.Value ?? "0"),
+                        IsDestroyed = bool.Parse(e.Element("IsDestroyed")?.Value ?? "false")
                     })
                     .ToList();
             }
@@ -62,18 +64,23 @@ public class SaveService
     {
         try
         {
+            // Сохраняем все шарики из AllBalls (это правильно, так как это полный список шариков уровня)
+            // Шарики, которые были удалены из Chain, все еще есть в AllBalls, но с IsDestroyed = true
+            // При загрузке мы восстановим цепочку на основе ChainProgress и NextBallIndex
             var doc = new XDocument(
                 new XElement("SaveGame",
                     new XElement("Username", username),
                     new XElement("Score", gameState.Score),
                     new XElement("Level", gameState.CurrentLevel),
                     new XElement("ChainProgress", gameState.ChainProgress),
+                    new XElement("NextBallIndex", gameState.NextBallIndex),
                     new XElement("ChainBalls",
-                        gameState.Chain.Select((ball, index) => new XElement("Ball",
+                        gameState.AllBalls.Select((ball, index) => new XElement("Ball",
                             new XElement("Color", ball.Color.ToString()),
                             new XElement("PositionX", ball.Position.X),
                             new XElement("PositionY", ball.Position.Y),
-                            new XElement("Index", index)
+                            new XElement("Index", index),
+                            new XElement("IsDestroyed", ball.IsDestroyed)
                         ))
                     )
                 )

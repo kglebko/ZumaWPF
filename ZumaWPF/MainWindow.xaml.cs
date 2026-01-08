@@ -70,25 +70,19 @@ public partial class MainWindow : Window
     {
         _mainMenuView = new MainMenuView();
         _mainMenuView.NewGame += OnNewGame;
-        _mainMenuView.Continue += OnContinue;
         _mainMenuView.SelectLevel += OnSelectLevel;
         _mainMenuView.HighScores += OnHighScores;
         _mainMenuView.Manual += OnManual;
         _mainMenuView.Exit += OnExit;
-        _mainMenuView.UpdateContinueButton(_saveService.HasSaveGame());
 
         ContentArea.Content = _mainMenuView;
     }
 
-    private void OnNewGame() => ShowLevelSelection();
-
-    private void OnContinue()
+    private void OnNewGame()
     {
-        var saveData = _saveService.LoadGame();
-        if (saveData == null) return;
-
-        var level = _gameService.CreateLevels().FirstOrDefault(l => l.Id == saveData.Level);
-        if (level == null) return;
+        // Новая игра начинается с первого уровня
+        var firstLevel = _gameService.CreateLevels().FirstOrDefault(l => l.Id == 1);
+        if (firstLevel == null) return;
 
         ShowLoadingView(() =>
         {
@@ -96,7 +90,7 @@ public partial class MainWindow : Window
                 _gameService, _chainController, _configService,
                 _audioService, _saveService, _userService);
 
-            _gameViewModel.LoadSavedGame(saveData, level);
+            _gameViewModel.StartLevel(1);
             ShowGameScreen();
         });
     }
@@ -209,6 +203,8 @@ public partial class MainWindow : Window
     {
         _gameViewModel?.SaveGame();
         MessageBox.Show("Игра сохранена");
+        // Обновляем состояние сохранения (на случай, если игрок вернется в меню)
+        // Кнопка обновится при следующем показе главного меню
     }
 
     private void OnMainMenuFromPause()

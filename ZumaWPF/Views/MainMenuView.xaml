@@ -29,11 +29,6 @@
                     Click="NewGame_Click" 
                     Width="250"
                     Margin="5"/>
-            <Button Content="Продолжить" 
-                    Click="Continue_Click" 
-                    Width="250"
-                    Margin="5"
-                    Name="ContinueButton"/>
             <Button Content="Выбор уровня" 
                     Click="SelectLevel_Click" 
                     Width="250"

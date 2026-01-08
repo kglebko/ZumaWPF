@@ -9,10 +9,12 @@ public class SaveData
     public int Level { get; set; }
     public List<BallData> ChainBalls { get; set; }
     public double ChainProgress { get; set; }
+    public int NextBallIndex { get; set; }
     
     public SaveData()
     {
         ChainBalls = new List<BallData>();
+        NextBallIndex = 0;
     }
 }
 
@@ -22,5 +24,6 @@ public class BallData
     public double PositionX { get; set; }
     public double PositionY { get; set; }
     public int Index { get; set; }
+    public bool IsDestroyed { get; set; }
 }
 

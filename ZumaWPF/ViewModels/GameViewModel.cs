@@ -22,6 +22,7 @@ public class GameViewModel : ViewModelBase
     private DispatcherTimer _gameTimer;
     private Ball? _flyingBall;
     private Point _mousePosition;
+    private double _shootAngle; // Угол в момент выстрела
     
     public GameState GameState { get; private set; }
     public List<Level> Levels { get; private set; }
@@ -99,24 +100,35 @@ public class GameViewModel : ViewModelBase
             var color = colorObj is Color c ? c : Colors.Red;
             return new Ball(color, new Point(b.PositionX, b.PositionY), _configService.Config.BallRadius)
             {
-                Index = b.Index
+                Index = b.Index,
+                IsDestroyed = b.IsDestroyed
             };
         }).ToList();
         
-        // Restore chain and next ball index from progress
+        // Restore chain and next ball index
         GameState.Chain = new List<Ball>();
         var ballSpacing = _configService.Config.BallRadius * 2.2;
-        GameState.NextBallIndex = 0;
+        GameState.NextBallIndex = saveData.NextBallIndex;
         
         // Восстанавливаем цепочку: добавляем шарики, которые уже должны были появиться
-        for (int i = 0; i < GameState.AllBalls.Count; i++)
+        // Используем NextBallIndex: шарики с индексами от 0 до NextBallIndex-1 должны быть в цепочке
+        // Но нам нужно восстановить только те шарики, которые не были удалены из Chain
+        // Поэтому используем сохраненный NextBallIndex для определения, сколько шариков уже появилось
+        // А затем восстанавливаем цепочку на основе ChainProgress
+        
+        // Восстанавливаем цепочку на основе ChainProgress
+        // Добавляем только те шарики, которые должны были появиться и не были удалены
+        for (int i = 0; i < GameState.AllBalls.Count && i < saveData.NextBallIndex; i++)
         {
             var spawnDistance = i * ballSpacing;
             if (GameState.ChainProgress >= spawnDistance)
             {
                 var ball = GameState.AllBalls[i];
-                GameState.Chain.Add(ball);
-                GameState.NextBallIndex = i + 1;
+                // Добавляем только шарики, которые не были удалены
+                if (!ball.IsDestroyed)
+                {
+                    GameState.Chain.Add(ball);
+                }
             }
         }
         
@@ -163,7 +175,13 @@ public class GameViewModel : ViewModelBase
         if (GameState.IsPaused || GameState.IsGameOver || GameState.IsVictory)
             return;
         
+        // Сохраняем угол в момент выстрела
+        _shootAngle = GameState.Shooter.Angle;
+        
         _flyingBall = GameState.Shooter.CurrentBall;
+        // Устанавливаем начальную позицию шарика в позиции стрелялки
+        _flyingBall.Position = GameState.Shooter.Position;
+        
         GameState.Shooter.CurrentBall = GameState.Shooter.NextBall;
         GameState.Shooter.NextBall = _gameService.CreateShotBall(GameState.Shooter.Position);
         GameState.Shooter.IsShooting = true;
@@ -197,9 +215,10 @@ public class GameViewModel : ViewModelBase
     
     public void SaveGame()
     {
-        if (_userService.CurrentUser != null)
+        // Сохраняем текущую игру в рекорды (High Scores)
+        if (_userService.CurrentUser != null && GameState.Score > 0)
         {
-            _saveService.SaveGame(GameState, _userService.CurrentUser.Username);
+            _userService.AddHighScore(_userService.CurrentUser.Username, GameState.Score, GameState.CurrentLevel);
         }
     }
     
@@ -217,7 +236,8 @@ public class GameViewModel : ViewModelBase
         if (_flyingBall != null)
         {
             var speed = 500.0 * deltaTime / 1000.0;
-            var angle = GameState.Shooter.Angle * Math.PI / 180;
+            // Используем сохраненный угол выстрела, а не текущий угол стрелялки
+            var angle = _shootAngle * Math.PI / 180;
             var dx = Math.Cos(angle) * speed;
             var dy = Math.Sin(angle) * speed;
             

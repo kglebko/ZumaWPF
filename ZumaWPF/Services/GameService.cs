@@ -21,32 +21,36 @@ public class GameService
     {
         var levels = new List<Level>();
         
-        // Level 1 - Волнистая траектория (НЕ проходит через центр 400,300)
-        // Центр экрана: 400, 300 - все точки должны быть минимум на расстоянии 150 от центра
+        // Level 1 - Волнистая траектория (ВОКРУГ стрелялки 400,300, НЕ проходит через нее)
+        // Центр экрана: 400, 300 - все точки минимум на расстоянии 150 от центра
+        // Траектория идет вокруг центра, обходя его слева, снизу, справа
         var level1Path = new GamePath(new List<Point>
         {
-            new Point(50, 100),
-            new Point(150, 80),
-            new Point(250, 100),
-            new Point(300, 120),
-            new Point(500, 100),
-            new Point(550, 80),
-            new Point(650, 100),
-            new Point(750, 120),
-            new Point(700, 200),
-            new Point(600, 250),
-            new Point(500, 280),
-            new Point(300, 320),
-            new Point(200, 300),
-            new Point(100, 280),
-            new Point(50, 350),
-            new Point(100, 450),
-            new Point(200, 500),
-            new Point(300, 520),
+            new Point(50, 180),
+            new Point(150, 140),
+            new Point(250, 180),
+            new Point(350, 140),
+            new Point(450, 180),
+            new Point(550, 140),
+            new Point(650, 180),
+            new Point(750, 220),
+
+            // Плавный уход вниз справа
+            new Point(720, 300),
+            new Point(680, 380),
+            new Point(600, 450),
             new Point(500, 500),
-            new Point(650, 450)
+            new Point(380, 520)
         });
-        levels.Add(new Level(1, "Волна", level1Path, _configService.Config.DefaultBallSpeed, "level1.jpg", 40));
+
+        levels.Add(new Level(
+            1,
+            "Волна",
+            level1Path,
+            _configService.Config.DefaultBallSpeed,
+            "level1.jpg",
+            40
+        ));
         
         // Level 2 - Спираль (НЕ проходит через центр 400,300)
         var level2Path = new GamePath(new List<Point>
@@ -73,33 +77,30 @@ public class GameService
         });
         levels.Add(new Level(2, "Спираль", level2Path, _configService.Config.DefaultBallSpeed * 1.2, "level2.jpg", 45));
         
-        // Level 3 - Зигзаг (НЕ проходит через центр 400,300, не пересекается)
+        // Level 3 - Змейка (ВОКРУГ стрелялки 400,300, НЕ проходит через нее)
+        // Центр экрана: 400, 300 - все точки минимум на расстоянии 150 от центра
+        // Зигзагообразная траектория, обходящая центр
         var level3Path = new GamePath(new List<Point>
         {
-            new Point(50, 150),
-            new Point(150, 100),
-            new Point(250, 150),
-            new Point(300, 100),
-            new Point(500, 150),
-            new Point(550, 100),
-            new Point(650, 150),
-            new Point(750, 200),
-            new Point(700, 300),
-            new Point(600, 350),
-            new Point(500, 400),
-            new Point(300, 450),
-            new Point(200, 500),
-            new Point(100, 480),
-            new Point(80, 350),
-            new Point(120, 280),
-            new Point(200, 250),
-            new Point(300, 280),
-            new Point(500, 320),
-            new Point(600, 300),
-            new Point(680, 250)
+            // Нижняя широкая часть
+            new Point(100, 500),
+            new Point(700, 500),
+
+            // Средний уровень, большой зигзаг
+            new Point(700, 400),
+            new Point(100, 400),
+
+            // Верхняя часть
+            new Point(100, 200),  // поднимаем выше центра
+            new Point(700, 200),
+
+            // Верхняя линия
+            new Point(700, 50),
+            new Point(100, 50)
         });
-        levels.Add(new Level(3, "Змейка", level3Path, _configService.Config.DefaultBallSpeed * 1.5, "level3.jpg", 50));
-        
+
+        levels.Add(new Level(3, "Змейка", level3Path, _configService.Config.DefaultBallSpeed * 1.5, "level3.jpg", 40));
+
         return levels;
     }
     
@@ -121,7 +122,8 @@ public class GameService
             // Позиция будет установлена позже при добавлении в цепочку
             var ball = new Ball(color, new Point(0, 0), _configService.Config.BallRadius)
             {
-                Index = i
+                Index = i,
+                OriginalIndex = i // Сохраняем оригинальный индекс из AllBalls
             };
             chain.Add(ball);
         }
@@ -156,6 +158,45 @@ public class GameService
         if (comboSize >= _configService.Config.MinComboSize)
         {
             return comboStart;
+        }
+        
+        return null;
+    }
+    
+    /// <summary>
+    /// Проверяет все комбинации в цепочке после удаления шариков.
+    /// Возвращает индекс начала первой найденной комбинации из 3+ шариков одного цвета подряд.
+    /// </summary>
+    public int? CheckAllCombinations(List<Ball> chain)
+    {
+        if (chain.Count < _configService.Config.MinComboSize)
+            return null;
+        
+        // Проходим по всей цепочке и ищем группы из 3+ шариков одного цвета подряд
+        for (int i = 0; i <= chain.Count - _configService.Config.MinComboSize; i++)
+        {
+            if (chain[i].IsDestroyed)
+                continue;
+            
+            var targetColor = chain[i].Color;
+            var comboSize = 1;
+            var comboEnd = i;
+            
+            // Проверяем, сколько шариков подряд одного цвета
+            while (comboEnd < chain.Count - 1 && !chain[comboEnd + 1].IsDestroyed && chain[comboEnd + 1].Color == targetColor)
+            {
+                comboEnd++;
+                comboSize++;
+            }
+            
+            // Если нашли комбинацию из 3+ шариков, возвращаем индекс начала
+            if (comboSize >= _configService.Config.MinComboSize)
+            {
+                return i;
+            }
+            
+            // Пропускаем уже проверенные шарики
+            i = comboEnd;
         }
         
         return null;

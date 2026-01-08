@@ -8,7 +8,8 @@ public class Ball
     public Color Color { get; set; }
     public Point Position { get; set; }
     public double Radius { get; set; }
-    public int Index { get; set; }
+    public int Index { get; set; } // Индекс в цепочке (для отображения)
+    public int OriginalIndex { get; set; } // Оригинальный индекс из AllBalls (для позиционирования)
     public bool IsDestroyed { get; set; }
     
     public Ball(Color color, Point position, double radius = 20)
@@ -17,6 +18,7 @@ public class Ball
         Position = position;
         Radius = radius;
         IsDestroyed = false;
+        OriginalIndex = -1;
     }
 }
 

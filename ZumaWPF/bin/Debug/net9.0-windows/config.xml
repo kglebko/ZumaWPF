@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GameConfig>
+  <BallSpeed>50</BallSpeed>
+  <PointsPerBall>10</PointsPerBall>
+  <ComboMultiplier>2</ComboMultiplier>
+  <BallRadius>20</BallRadius>
+  <MinComboSize>3</MinComboSize>
+  <BallColors>
+    <Color>#FFFF0000</Color>
+    <Color>#FF0000FF</Color>
+    <Color>#FF008000</Color>
+    <Color>#FFFFFF00</Color>
+    <Color>#FF800080</Color>
+    <Color>#FFFFA500</Color>
+  </BallColors>
+</GameConfig>

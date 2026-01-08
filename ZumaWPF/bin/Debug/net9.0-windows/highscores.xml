@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HighScores>
+  <HighScore>
+    <Username>Игрок</Username>
+    <Score>620</Score>
+    <Level>2</Level>
+    <Date>2026-01-08T05:14:29.6986706+03:00</Date>
+  </HighScore>
+  <HighScore>
+    <Username>Ксюша</Username>
+    <Score>180</Score>
+    <Level>1</Level>
+    <Date>2026-01-08T03:17:36.9813538+03:00</Date>
+  </HighScore>
+  <HighScore>
+    <Username>Диана</Username>
+    <Score>120</Score>
+    <Level>3</Level>
+    <Date>2026-01-08T03:22:00.3253391+03:00</Date>
+  </HighScore>
+  <HighScore>
+    <Username>Ксения</Username>
+    <Score>120</Score>
+    <Level>2</Level>
+    <Date>2026-01-08T04:09:54.2357472+03:00</Date>
+  </HighScore>
+  <HighScore>
+    <Username>Ксения\</Username>
+    <Score>0</Score>
+    <Level>1</Level>
+    <Date>2026-01-08T04:09:07.6463517+03:00</Date>
+  </HighScore>
+</HighScores>

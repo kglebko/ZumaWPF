@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SaveGame>
+  <Username>Игрок</Username>
+  <Score>0</Score>
+  <Level>3</Level>
+  <ChainProgress>22.799999999999994</ChainProgress>
+  <ChainBalls>
+    <Ball>
+      <Color>#FF800080</Color>
+      <PositionX>70.39293995479808</PositionX>
+      <PositionY>139.80353002260097</PositionY>
+      <Index>0</Index>
+    </Ball>
+  </ChainBalls>
+</SaveGame>

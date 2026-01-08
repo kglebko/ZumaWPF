@@ -1,0 +1,139 @@
+<UserControl x:Class="ZumaWPF.Views.ManualView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Background="#2C3E50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" 
+                   Text="СПРАВКА" 
+                   FontSize="36" 
+                   FontWeight="Bold" 
+                   Foreground="White"
+                   HorizontalAlignment="Center" 
+                   Margin="0,30"/>
+        
+        <ScrollViewer Grid.Row="1" 
+                      Margin="50,20"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="ОПИСАНИЕ ИГРЫ" 
+                           FontSize="24" 
+                           FontWeight="Bold" 
+                           Foreground="#3498DB"
+                           Margin="0,0,0,10"/>
+                
+                <TextBlock Text="Zuma - это игра-головоломка, в которой вы управляете стрелком (лягушкой), который стреляет разноцветными шариками по движущейся цепочке шариков." 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,20"
+                           FontSize="16"/>
+                
+                <TextBlock Text="ЦЕЛЬ ИГРЫ" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="#3498DB"
+                           Margin="0,10,0,10"/>
+                
+                <TextBlock Text="• Уничтожить все шарики в цепочке, создавая комбинации из 3 и более шариков одного цвета" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,5"
+                           FontSize="14"/>
+                
+                <TextBlock Text="• Не допустить, чтобы цепочка дошла до конца пути" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,20"
+                           FontSize="14"/>
+                
+                <TextBlock Text="УПРАВЛЕНИЕ" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="#3498DB"
+                           Margin="0,10,0,10"/>
+                
+                <TextBlock Text="• Движение мыши - наведение стрелка в направлении курсора" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,5"
+                           FontSize="14"/>
+                
+                <TextBlock Text="• Левая кнопка мыши - выстрел шариком" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,5"
+                           FontSize="14"/>
+                
+                <TextBlock Text="• ESC - пауза игры" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,20"
+                           FontSize="14"/>
+                
+                <TextBlock Text="ГЕЙМПЛЕЙ" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="#3498DB"
+                           Margin="0,10,0,10"/>
+                
+                <TextBlock Text="• Цепочка шариков движется по заданной траектории" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,5"
+                           FontSize="14"/>
+                
+                <TextBlock Text="• Выстреливайте шариком в цепочку, чтобы вставить его в нужное место" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,5"
+                           FontSize="14"/>
+                
+                <TextBlock Text="• Когда 3 или более шарика одного цвета оказываются подряд, они исчезают" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,5"
+                           FontSize="14"/>
+                
+                <TextBlock Text="• За уничтоженные шарики начисляются очки. Больше шариков в комбинации - больше очков!" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,5"
+                           FontSize="14"/>
+                
+                <TextBlock Text="• Следующий шарик показывается рядом со стрелком" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,20"
+                           FontSize="14"/>
+                
+                <TextBlock Text="УРОВНИ" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="#3498DB"
+                           Margin="0,10,0,10"/>
+                
+                <TextBlock Text="Игра содержит несколько уровней, каждый с уникальной траекторией движения шариков и скоростью. Пройдите все уровни, чтобы победить!" 
+                           TextWrapping="Wrap" 
+                           Foreground="White"
+                           Margin="0,0,0,20"
+                           FontSize="14"/>
+            </StackPanel>
+        </ScrollViewer>
+        
+        <Button Grid.Row="2" 
+                Content="Назад" 
+                Click="Back_Click" 
+                Width="150"
+                HorizontalAlignment="Center"
+                Margin="0,20"/>
+    </Grid>
+</UserControl>
+

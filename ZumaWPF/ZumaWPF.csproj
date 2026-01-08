@@ -8,4 +8,17 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Assets\Images\" />
+      <Folder Include="Assets\Sounds\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\Images\menu_bg.jpg" />
+      <Resource Include="Assets\Images\menu_bg.jpg" />
+      <None Remove="Assets\Images\game_bg].jpg" />
+      <None Remove="Assets\Images\game_bg.jpg" />
+      <Resource Include="Assets\Images\game_bg.jpg" />
+    </ItemGroup>
+
 </Project>

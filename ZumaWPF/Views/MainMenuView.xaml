@@ -4,56 +4,74 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="800">
-    <Grid Background="#2C3E50">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" 
-                   Text="ZUMA" 
-                   FontSize="72" 
-                   FontWeight="Bold" 
-                   Foreground="#3498DB"
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"
-                   Margin="0,50,0,0"/>
-        
-        <StackPanel Grid.Row="1" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Margin="0,20">
-            <Button Content="Новая игра" 
-                    Click="NewGame_Click" 
-                    Width="250"
-                    Margin="5"/>
-            <Button Content="Выбор уровня" 
-                    Click="SelectLevel_Click" 
-                    Width="250"
-                    Margin="5"/>
-            <Button Content="Рекорды" 
-                    Click="HighScores_Click" 
-                    Width="250"
-                    Margin="5"/>
-            <Button Content="Справка" 
-                    Click="Manual_Click" 
-                    Width="250"
-                    Margin="5"/>
-            <Button Content="Выход" 
-                    Click="Exit_Click" 
-                    Width="250"
-                    Margin="5"/>
-        </StackPanel>
-        
-        <TextBlock Grid.Row="2" 
-                   Text="Управление: мышь - наведение и стрельба, ESC - пауза" 
-                   FontSize="12" 
-                   Foreground="LightGray"
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Bottom"
-                   Margin="0,0,0,20"/>
+             d:DesignHeight="600"
+             d:DesignWidth="800">
+
+    <Grid>
+
+        <!-- 🖼 Фон -->
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <!-- 🌑 Затемнение -->
+        <Border Background="#99000000"/>
+
+        <!-- Контент -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- Заголовок -->
+                <RowDefinition Height="*"/>    <!-- Кнопки -->
+                <RowDefinition Height="Auto"/> <!-- Подсказка -->
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок -->
+            <TextBlock Grid.Row="0"
+                       Text="ZUMA"
+                       Style="{StaticResource TitleTextStyle}"
+                       Margin="0,40,0,20"
+                       HorizontalAlignment="Center"/>
+
+            <!-- Кнопки (со скроллом, чтобы НИЧЕГО не обрезалось) -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,20"
+                            MaxWidth="320">
+
+                    <Button Content="Новая игра"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="NewGame_Click"/>
+
+                    <Button Content="Выбор уровня"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="SelectLevel_Click"/>
+
+                    <Button Content="Рекорды"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="HighScores_Click"/>
+
+                    <Button Content="Справка"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="Manual_Click"/>
+
+                    <Button Content="Выход"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="Exit_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Подсказка -->
+            <TextBlock Grid.Row="2"
+                       Text="Мышь — прицел и выстрел | ESC — пауза"
+                       Style="{StaticResource NormalTextStyle}"
+                       Foreground="White"
+                       Margin="0,10,0,20"
+                       HorizontalAlignment="Center"/>
+        </Grid>
     </Grid>
 </UserControl>
-

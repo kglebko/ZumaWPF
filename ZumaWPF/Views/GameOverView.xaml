@@ -4,41 +4,59 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600"
+             d:DesignWidth="800">
 
-    <Grid Background="#80000000">
+    <Grid>
+        <!-- Фоновая картинка -->
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <!-- Затемнение -->
+        <Border Background="#99000000"/>
+
+        <!-- Основной контейнер -->
         <Border Background="#2C3E50"
                 Padding="40"
                 CornerRadius="12"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+                MaxWidth="500">
 
-            <StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <!-- Заголовок -->
                 <TextBlock Text="ИГРА ОКОНЧЕНА"
                            FontSize="48"
                            FontWeight="Bold"
-                           Foreground="#E74C3C"
+                           Foreground="{StaticResource PrimaryColor}"
                            HorizontalAlignment="Center"
+                           TextAlignment="Center"
                            Margin="0,0,0,20"/>
 
+                <!-- Очки -->
                 <TextBlock Name="ScoreText"
                            Text="Очки: 0"
-                           FontSize="24"
-                           Foreground="White"
+                           FontSize="28"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource PrimaryColor}"
                            HorizontalAlignment="Center"
+                           TextAlignment="Center"
                            Margin="0,0,0,30"/>
 
-                <Button Content="Повторить"
-                        Click="Retry_Click"
-                        Width="250"
-                        Height="50"
-                        Margin="5"/>
+                <!-- Кнопки -->
+                <StackPanel>
+                    <Button Content="Повторить"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="Retry_Click"/>
 
-                <Button Content="Главное меню"
-                        Click="MainMenu_Click"
-                        Width="250"
-                        Height="50"
-                        Margin="5"/>
+                    <Button Content="Главное меню"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="MainMenu_Click"/>
+                </StackPanel>
+
             </StackPanel>
         </Border>
     </Grid>

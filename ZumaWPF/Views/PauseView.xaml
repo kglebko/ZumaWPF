@@ -6,38 +6,49 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
 
-    <Grid Background="#80000000">
+    <Grid>
+        <!-- Фоновая картинка -->
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <!-- Затемнение -->
+        <Border Background="#99000000"/>
+
+        <!-- Основной контейнер -->
         <Border Background="#2C3E50"
                 Padding="40"
                 CornerRadius="12"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                VerticalAlignment="Center"
+                MaxWidth="500">
 
-            <StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <!-- Заголовок -->
                 <TextBlock Text="ПАУЗА"
                            FontSize="48"
                            FontWeight="Bold"
                            Foreground="White"
                            HorizontalAlignment="Center"
+                           TextAlignment="Center"
                            Margin="0,0,0,30"/>
 
-                <Button Content="Продолжить"
-                        Click="Resume_Click"
-                        Width="250"
-                        Height="50"
-                        Margin="5"/>
+                <!-- Кнопки -->
+                <StackPanel>
+                    <Button Content="Продолжить"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="Resume_Click"/>
 
-                <Button Content="Сохранить"
-                        Click="Save_Click"
-                        Width="250"
-                        Height="50"
-                        Margin="5"/>
+                    <Button Content="Сохранить"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="Save_Click"/>
 
-                <Button Content="Главное меню"
-                        Click="MainMenu_Click"
-                        Width="250"
-                        Height="50"
-                        Margin="5"/>
+                    <Button Content="Главное меню"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="MainMenu_Click"/>
+                </StackPanel>
+
             </StackPanel>
         </Border>
     </Grid>

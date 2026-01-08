@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ZumaWPF"
         xmlns:views="clr-namespace:ZumaWPF.Views"
         mc:Ignorable="d"
-        Title="Zuma Game" Height="600" Width="800"
+        Title="Zuma Game" Height="800" Width="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
     <Grid>

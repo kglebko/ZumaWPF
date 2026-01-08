@@ -4,38 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="800">
-    <Grid Background="#2C3E50">
-        <StackPanel HorizontalAlignment="Center" 
+             d:DesignHeight="600"
+             d:DesignWidth="800">
+
+    <Grid>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <Border Background="#99000000"/>
+
+        <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Width="400">
-            <TextBlock Text="Введите имя игрока" 
-                       FontSize="24" 
-                       Foreground="White"
-                       HorizontalAlignment="Center"
+                    Width="420">
+
+            <TextBlock Text="Введите имя игрока"
+                       Style="{StaticResource TitleTextStyle}"
+                       FontSize="28"
                        Margin="0,0,0,30"/>
-            
-            <TextBox Name="UsernameTextBox" 
-                     FontSize="18" 
-                     Padding="10"
-                     Margin="0,0,0,20"
+
+            <TextBox Name="UsernameTextBox"
+                     FontSize="18"
+                     Padding="12"
                      Text="Игрок"
-                     KeyDown="UsernameTextBox_KeyDown"/>
-            
-            <Button Content="Войти" 
-                    Click="Login_Click" 
-                    Width="200"
-                    HorizontalAlignment="Center"
-                    Height="40"/>
-            
-            <TextBlock Name="ErrorText" 
-                       Text="" 
-                       Foreground="Red"
-                       HorizontalAlignment="Center"
+                     Margin="0,0,0,20"/>
+
+            <Button Content="Войти"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Click="Login_Click"/>
+
+            <TextBlock Name="ErrorText"
+                       Foreground="Tomato"
                        Margin="0,20,0,0"
-                       TextWrapping="Wrap"
-                       Visibility="Collapsed"/>
+                       Visibility="Collapsed"
+                       TextAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>
-

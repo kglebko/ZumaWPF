@@ -5,58 +5,71 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
-    <Grid Background="#2C3E50">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" 
-                   Text="Выбор уровня" 
-                   FontSize="36" 
-                   FontWeight="Bold" 
-                   Foreground="White"
-                   HorizontalAlignment="Center" 
-                   Margin="0,30"/>
-        
-        <ItemsControl Grid.Row="1" 
-                      Name="LevelsContainer"
-                      Margin="50">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="3" 
-                                 Rows="1"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Content="{Binding Name}" 
-                            Click="LevelButton_Click"
-                            Tag="{Binding}"
-                            Margin="20"
-                            Height="120"
-                            FontSize="20">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#3498DB"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        
-        <Button Grid.Row="2" 
-                Content="Назад" 
-                Click="Back_Click" 
-                Width="150"
-                HorizontalAlignment="Center"
-                Margin="0,20"/>
+
+    <Grid>
+        <!-- Фон -->
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <!-- Затемнение -->
+        <Border Background="#99000000"/>
+
+        <!-- Контент -->
+        <Grid Margin="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- Заголовок -->
+                <RowDefinition Height="*"/>    <!-- Список уровней -->
+                <RowDefinition Height="Auto"/> <!-- Назад -->
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок -->
+            <TextBlock Grid.Row="0"
+                       Text="Выбор уровня"
+                       Style="{StaticResource TitleTextStyle}"
+                       Margin="0,40,0,20"
+                       HorizontalAlignment="Center"/>
+
+            <!-- Список уровней -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl Name="LevelsContainer"
+                              ItemsSource="{Binding Levels}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <!-- WrapPanel с фиксированным размером элементов -->
+                            <WrapPanel HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       ItemWidth="200"
+                                       ItemHeight="200"
+                                       Margin="0,10"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Name}"
+                                    Tag="{Binding}"
+                                    Style="{StaticResource MenuButtonStyle}"
+                                    Click="LevelButton_Click"
+                                    Width="180"
+                                    Height="180"
+                                    Margin="10"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- Назад -->
+            <Button Grid.Row="2"
+                    Content="Назад"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Width="200"
+                    HorizontalAlignment="Center"
+                    Click="Back_Click"
+                    Margin="0,20"/>
+        </Grid>
     </Grid>
 </UserControl>
-

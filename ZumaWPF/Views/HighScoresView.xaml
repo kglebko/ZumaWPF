@@ -4,52 +4,129 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="800">
-    <Grid Background="#2C3E50">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" 
-                   Text="ТАБЛИЦА РЕКОРДОВ" 
-                   FontSize="36" 
-                   FontWeight="Bold" 
-                   Foreground="White"
-                   HorizontalAlignment="Center" 
-                   Margin="0,30"/>
-        
-        <ListView Grid.Row="1" 
-                  Name="ScoresList"
-                  Background="#34495E"
-                  Foreground="White"
-                  Margin="50,20"
-                  BorderThickness="0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Место" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Index}" 
-                                           HorizontalAlignment="Center"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Имя" Width="200" DisplayMemberBinding="{Binding Username}"/>
-                    <GridViewColumn Header="Очки" Width="150" DisplayMemberBinding="{Binding Score}"/>
-                    <GridViewColumn Header="Уровень" Width="100" DisplayMemberBinding="{Binding Level}"/>
-                    <GridViewColumn Header="Дата" Width="200" DisplayMemberBinding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        
-        <Button Grid.Row="2" 
-                Content="Назад" 
-                Click="Back_Click" 
-                Width="150"
-                HorizontalAlignment="Center"
-                Margin="0,20"/>
+             d:DesignHeight="600"
+             d:DesignWidth="800">
+
+    <Grid>
+        <!-- Фоновая картинка -->
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <!-- Затемнение -->
+        <Border Background="#99000000"/>
+
+        <!-- Контент -->
+        <Grid Margin="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок -->
+            <TextBlock Grid.Row="0"
+                       Text="ТАБЛИЦА РЕКОРДОВ"
+                       Style="{StaticResource TitleTextStyle}"
+                       Margin="0,40,0,20"
+                       HorizontalAlignment="Center"/>
+
+            <!-- Таблица рекордов -->
+            <ListView Grid.Row="1"
+                      Name="ScoresList"
+                      Background="#2E7D32" 
+                      Foreground="White"
+                      Margin="0,10"
+                      BorderThickness="0"
+                      HorizontalAlignment="Center"
+                      Width="750"
+                      FontSize="16">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Место" Width="70">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Index}" HorizontalAlignment="Center" FontSize="16"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Имя" Width="200">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Username}" FontSize="16"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Очки" Width="120">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Score}" FontSize="16"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Уровень" Width="100">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Level}" FontSize="16"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Дата" Width="200">
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="FontSize" Value="16"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Date, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="16"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Назад -->
+            <Button Grid.Row="2"
+                    Content="Назад"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Width="200"
+                    HorizontalAlignment="Center"
+                    Click="Back_Click"
+                    Margin="0,20"/>
+        </Grid>
     </Grid>
 </UserControl>
-

@@ -4,21 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="800">
-    <Grid Background="#2C3E50">
-        <StackPanel HorizontalAlignment="Center" 
+             d:DesignHeight="600"
+             d:DesignWidth="800">
+
+    <Grid>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <Border Background="#99000000"/>
+
+        <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-            <TextBlock Text="Загрузка уровня..." 
-                       FontSize="32" 
-                       Foreground="White"
-                       HorizontalAlignment="Center"
+
+            <TextBlock Text="Загрузка уровня..."
+                       Style="{StaticResource TitleTextStyle}"
+                       FontSize="28"
                        Margin="0,0,0,30"/>
-            
-            <ProgressBar Name="LoadingProgress" 
-                         Width="400" 
-                         Height="20"
+
+            <ProgressBar Width="420"
+                         Height="18"
                          IsIndeterminate="True"/>
         </StackPanel>
     </Grid>
 </UserControl>
-

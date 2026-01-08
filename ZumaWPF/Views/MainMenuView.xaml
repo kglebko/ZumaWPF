@@ -55,6 +55,10 @@
                             Style="{StaticResource MenuButtonStyle}"
                             Click="HighScores_Click"/>
 
+                    <Button Content="Настройки"
+                            Style="{StaticResource MenuButtonStyle}"
+                            Click="Settings_Click"/>
+
                     <Button Content="Справка"
                             Style="{StaticResource MenuButtonStyle}"
                             Click="Manual_Click"/>

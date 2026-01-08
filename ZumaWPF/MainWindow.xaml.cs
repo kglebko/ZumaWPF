@@ -30,6 +30,7 @@ public partial class MainWindow : Window
     private GameOverView? _gameOverView;
     private VictoryView? _victoryView;
     private HighScoresView? _highScoresView;
+    private SettingsView? _settingsView;
     private ManualView? _manualView;
 
     public MainWindow()
@@ -41,9 +42,10 @@ public partial class MainWindow : Window
         _saveService = new SaveService();
         _audioService = new AudioService();
         _audioService.Initialize();
+        _audioService.PlayBackgroundMusic();
 
         _gameService = new GameService(_configService);
-        _chainController = new ChainController(_gameService, _configService);
+        _chainController = new ChainController(_gameService, _configService, _audioService);
 
         ShowLoginView(_saveService.HasSaveGame());
     }
@@ -72,6 +74,7 @@ public partial class MainWindow : Window
         _mainMenuView.NewGame += OnNewGame;
         _mainMenuView.SelectLevel += OnSelectLevel;
         _mainMenuView.HighScores += OnHighScores;
+        _mainMenuView.Settings += OnSettings;
         _mainMenuView.Manual += OnManual;
         _mainMenuView.Exit += OnExit;
 
@@ -289,6 +292,13 @@ public partial class MainWindow : Window
         ContentArea.Content = _highScoresView;
     }
 
+    private void OnSettings()
+    {
+        _settingsView = new SettingsView(_audioService);
+        _settingsView.Back += ShowMainMenu;
+        ContentArea.Content = _settingsView;
+    }
+    
     private void OnManual()
     {
         _manualView = new ManualView();

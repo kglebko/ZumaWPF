@@ -72,8 +72,8 @@ public class GameViewModel : ViewModelBase
         GameState.IsVictory = false;
         GameState.IsPaused = false;
         
-        // Position shooter at center of screen
-        var shooterPos = new Point(400, 300);
+        // Position shooter at center of screen (1000x800)
+        var shooterPos = new Point(500, 400);
         GameState.Shooter = new Shooter(shooterPos);
         GameState.Shooter.CurrentBall = _gameService.CreateShotBall(shooterPos);
         GameState.Shooter.NextBall = _gameService.CreateShotBall(shooterPos);
@@ -143,8 +143,8 @@ public class GameViewModel : ViewModelBase
             }
         }
         
-        // Position shooter at center of screen
-        var shooterPos = new Point(400, 300);
+        // Position shooter at center of screen (1000x800)
+        var shooterPos = new Point(500, 400);
         GameState.Shooter = new Shooter(shooterPos);
         GameState.Shooter.CurrentBall = _gameService.CreateShotBall(shooterPos);
         GameState.Shooter.NextBall = _gameService.CreateShotBall(shooterPos);
@@ -200,7 +200,7 @@ public class GameViewModel : ViewModelBase
         {
             GameState.IsPaused = true;
             _gameTimer.Stop();
-            _audioService.StopBackgroundMusic();
+            //_audioService.StopBackgroundMusic();
             OnPropertyChanged(nameof(GameState));
         }
     }
@@ -273,16 +273,21 @@ public class GameViewModel : ViewModelBase
                 {
                     if (_chainController.TryInsertBall(GameState, _flyingBall, closestBall.Position))
                     {
-                        _audioService.PlayDestroySound();
+                        // Звук комбо будет проигран в ChainController
+                    }
+                    else
+                    {
+                        // Просто попадание без комбо
+                        _audioService.PlayHitSound();
                     }
                     _flyingBall = null;
                     GameState.Shooter.IsShooting = false;
                 }
                 else
                 {
-                    // Check out of bounds
-                    if (_flyingBall.Position.X < -50 || _flyingBall.Position.X > 850 ||
-                        _flyingBall.Position.Y < -50 || _flyingBall.Position.Y > 650)
+                    // Check out of bounds (1000x800)
+                    if (_flyingBall.Position.X < -50 || _flyingBall.Position.X > 1050 ||
+                        _flyingBall.Position.Y < -50 || _flyingBall.Position.Y > 850)
                     {
                         _flyingBall = null;
                         GameState.Shooter.IsShooting = false;
@@ -294,7 +299,7 @@ public class GameViewModel : ViewModelBase
         if (GameState.IsGameOver)
         {
             _gameTimer.Stop();
-            _audioService.StopBackgroundMusic();
+            //_audioService.StopBackgroundMusic();
             if (_userService.CurrentUser != null)
             {
                 _userService.AddHighScore(_userService.CurrentUser.Username, GameState.Score, GameState.CurrentLevel);
@@ -306,7 +311,7 @@ public class GameViewModel : ViewModelBase
         if (GameState.IsVictory)
         {
             _gameTimer.Stop();
-            _audioService.StopBackgroundMusic();
+            //_audioService.StopBackgroundMusic();
             if (_userService.CurrentUser != null)
             {
                 _userService.AddHighScore(_userService.CurrentUser.Username, GameState.Score, GameState.CurrentLevel);
@@ -323,7 +328,7 @@ public class GameViewModel : ViewModelBase
     public void Stop()
     {
         _gameTimer.Stop();
-        _audioService.StopBackgroundMusic();
+        //_audioService.StopBackgroundMusic();
     }
 }
 

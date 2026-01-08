@@ -8,6 +8,7 @@ public partial class MainMenuView : UserControl
     public event System.Action? NewGame;
     public event System.Action? SelectLevel;
     public event System.Action? HighScores;
+    public event System.Action? Settings; 
     public event System.Action? Manual;
     public event System.Action? Exit;
     
@@ -29,6 +30,11 @@ public partial class MainMenuView : UserControl
     private void HighScores_Click(object sender, RoutedEventArgs e)
     {
         HighScores?.Invoke();
+    }
+    
+    private void Settings_Click(object sender, RoutedEventArgs e)
+    {
+        Settings?.Invoke();
     }
     
     private void Manual_Click(object sender, RoutedEventArgs e)

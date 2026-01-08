@@ -1,0 +1,79 @@
+<UserControl x:Class="ZumaWPF.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800">
+
+    <Grid>
+        <!-- Фоновая картинка -->
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <!-- Затемнение -->
+        <Border Background="#99000000"/>
+
+        <!-- Основной контейнер -->
+        <Border Background="{StaticResource LightBackgroundColor}"
+                Padding="40"
+                CornerRadius="16"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="500">
+
+            <StackPanel HorizontalAlignment="Center">
+
+                <!-- Заголовок -->
+                <TextBlock Text="НАСТРОЙКИ"
+                           FontSize="48"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource PrimaryColor}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,30"/>
+
+                <!-- Блок настроек -->
+                <StackPanel Width="320">
+
+                    <TextBlock Text="Звук и музыка"
+                               FontSize="22"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextDarkColor}"
+                               Margin="0,0,0,20"
+                               TextAlignment="Center"/>
+
+                    <!-- Музыка -->
+                    <CheckBox Name="MusicCheckBox"
+                              Content="Фоновая музыка"
+                              FontSize="18"
+                              Foreground="{StaticResource TextDarkColor}"
+                              Margin="0,0,0,15"
+                              IsChecked="True"
+                              Checked="MusicCheckBox_Checked"
+                              Unchecked="MusicCheckBox_Unchecked"/>
+
+                    <!-- Звуки -->
+                    <CheckBox Name="SoundCheckBox"
+                              Content="Звуковые эффекты"
+                              FontSize="18"
+                              Foreground="{StaticResource TextDarkColor}"
+                              Margin="0,0,0,30"
+                              IsChecked="True"
+                              Checked="SoundCheckBox_Checked"
+                              Unchecked="SoundCheckBox_Unchecked"/>
+
+                </StackPanel>
+
+                <!-- Кнопка назад -->
+                <Button Content="Назад"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="Back_Click"
+                        Margin="0,20,0,0"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

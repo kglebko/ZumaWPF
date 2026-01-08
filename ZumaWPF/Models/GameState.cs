@@ -24,7 +24,7 @@ public class GameState
         Chain = new List<Ball>();
         AllBalls = new List<Ball>();
         NextBallIndex = 0;
-        Shooter = new Shooter(new System.Windows.Point(400, 300));
+        Shooter = new Shooter(new System.Windows.Point(500, 400));
         IsPaused = false;
         IsGameOver = false;
         IsVictory = false;

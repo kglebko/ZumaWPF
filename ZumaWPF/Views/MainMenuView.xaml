@@ -8,32 +8,39 @@
              d:DesignWidth="800">
 
     <Grid>
-
-        <!-- 🖼 Фон -->
+            
         <Grid.Background>
             <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <!-- 🌑 Затемнение -->
-        <Border Background="#99000000"/>
-
-        <!-- Контент -->
+        <Border Background="#99000000"/> 
+        
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/> <!-- Заголовок -->
-                <RowDefinition Height="*"/>    <!-- Кнопки -->
-                <RowDefinition Height="Auto"/> <!-- Подсказка -->
+                <RowDefinition Height="Auto"/> 
+                <RowDefinition Height="*"/>  
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Заголовок -->
             <TextBlock Grid.Row="0"
                        Text="ZUMA"
-                       Style="{StaticResource TitleTextStyle}"
+                       FontSize="72"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
                        Margin="0,40,0,20"
-                       HorizontalAlignment="Center"/>
+                       Foreground="#2E7D32"  
+                       TextAlignment="Center">
 
-            <!-- Кнопки (со скроллом, чтобы НИЧЕГО не обрезалось) -->
+                    <TextBlock.Effect>
+                            <DropShadowEffect Color="White"  
+                                              BlurRadius="3"  
+                                              ShadowDepth="0"
+                                              Opacity="1"/>
+                    </TextBlock.Effect>
+            </TextBlock>
+
+            
             <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled">
@@ -68,8 +75,7 @@
                             Click="Exit_Click"/>
                 </StackPanel>
             </ScrollViewer>
-
-            <!-- Подсказка -->
+            
             <TextBlock Grid.Row="2"
                        Text="Мышь — прицел и выстрел | ESC — пауза"
                        Style="{StaticResource NormalTextStyle}"

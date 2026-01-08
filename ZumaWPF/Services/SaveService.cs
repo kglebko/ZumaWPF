@@ -64,9 +64,6 @@ public class SaveService
     {
         try
         {
-            // Сохраняем все шарики из AllBalls (это правильно, так как это полный список шариков уровня)
-            // Шарики, которые были удалены из Chain, все еще есть в AllBalls, но с IsDestroyed = true
-            // При загрузке мы восстановим цепочку на основе ChainProgress и NextBallIndex
             var doc = new XDocument(
                 new XElement("SaveGame",
                     new XElement("Username", username),

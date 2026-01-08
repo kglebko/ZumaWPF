@@ -83,7 +83,6 @@ public partial class MainWindow : Window
 
     private void OnNewGame()
     {
-        // Новая игра начинается с первого уровня
         var firstLevel = _gameService.CreateLevels().FirstOrDefault(l => l.Id == 1);
         if (firstLevel == null) return;
 
@@ -206,8 +205,6 @@ public partial class MainWindow : Window
     {
         _gameViewModel?.SaveGame();
         MessageBox.Show("Игра сохранена");
-        // Обновляем состояние сохранения (на случай, если игрок вернется в меню)
-        // Кнопка обновится при следующем показе главного меню
     }
 
     private void OnMainMenuFromPause()

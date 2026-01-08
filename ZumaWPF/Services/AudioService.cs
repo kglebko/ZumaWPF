@@ -40,7 +40,6 @@ public class AudioService
     {
         try
         {
-            // Фоновая музыка
             _backgroundMusic = new MediaPlayer();
             var musicPath = Path.Combine("Assets", "Sounds", "music.mp3");
             if (File.Exists(musicPath))
@@ -53,7 +52,6 @@ public class AudioService
                 };
             }
             
-            // Звук выстрела
             _shootSound = new MediaPlayer();
             var shootPath = Path.Combine("Assets", "Sounds", "shot.mp3");
             if (File.Exists(shootPath))
@@ -61,7 +59,6 @@ public class AudioService
                 _shootSound.Open(new Uri(Path.GetFullPath(shootPath), UriKind.Absolute));
             }
             
-            // Звук попадания (используем тот же shot.mp3, но можно заменить на другой файл)
             _hitSound = new MediaPlayer();
             var hitPath = Path.Combine("Assets", "Sounds", "boom.mp3");
             if (File.Exists(hitPath))
@@ -69,7 +66,6 @@ public class AudioService
                 _hitSound.Open(new Uri(Path.GetFullPath(hitPath), UriKind.Absolute));
             }
             
-            // Звук уничтожения комбо/результата
             _comboSound = new MediaPlayer();
             var comboPath = Path.Combine("Assets", "Sounds", "like.mp3");
             if (File.Exists(comboPath))

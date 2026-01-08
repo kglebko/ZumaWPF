@@ -7,7 +7,6 @@
              d:DesignHeight="800" d:DesignWidth="1000">
 
     <Grid>
-        <!-- Canvas с фоном -->
         <Canvas Name="GameCanvas" 
                 MouseMove="GameCanvas_MouseMove"
                 MouseLeftButtonDown="GameCanvas_MouseLeftButtonDown"
@@ -16,16 +15,14 @@
                 Height="800"
                 Focusable="True"
                 KeyDown="GameCanvas_KeyDown">
-
-            <!-- Фоновое изображение -->
+            
             <Canvas.Background>
                 <ImageBrush ImageSource="/Assets/Images/game_bg.jpg" 
                             Stretch="UniformToFill"/>
             </Canvas.Background>
 
         </Canvas>
-
-        <!-- Панель с очками и уровнем -->
+        
         <Border Background="#80000000"
                 Padding="10"
                 CornerRadius="6"

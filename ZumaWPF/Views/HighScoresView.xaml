@@ -8,40 +8,85 @@
              d:DesignWidth="800">
 
     <Grid>
-        <!-- Фоновая картинка -->
         <Grid.Background>
             <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
-
-        <!-- Затемнение -->
+        
         <Border Background="#99000000"/>
-
-        <!-- Контент -->
+        
         <Grid Margin="40">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
-            <!-- Заголовок -->
+            
             <TextBlock Grid.Row="0"
                        Text="ТАБЛИЦА РЕКОРДОВ"
                        Style="{StaticResource TitleTextStyle}"
                        Margin="0,40,0,20"
                        HorizontalAlignment="Center"/>
-
-            <!-- Таблица рекордов -->
+            
             <ListView Grid.Row="1"
                       Name="ScoresList"
-                      Background="#2E7D32" 
+                      Background="#2E7D32"
                       Foreground="White"
                       Margin="0,10"
                       BorderThickness="0"
                       HorizontalAlignment="Center"
                       Width="750"
                       FontSize="16">
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border x:Name="Bd"
+                                            Background="Transparent"
+                                            SnapsToDevicePixels="True">
+                                        <GridViewRowPresenter
+                                            VerticalAlignment="Center"
+                                            Columns="{TemplateBinding GridView.ColumnCollection}"
+                                            Content="{TemplateBinding Content}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Bd"
+                                                    Property="Background"
+                                                    Value="#388E3C"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Bd"
+                                                    Property="Background"
+                                                    Value="#2E7D32"/>
+                                        </Trigger>
+                                        
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSelected" Value="True"/>
+                                                <Condition Property="IsMouseOver" Value="True"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter TargetName="Bd"
+                                                    Property="Background"
+                                                    Value="#1B5E20"/>
+                                        </MultiTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                                
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Место" Width="70">
@@ -118,8 +163,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-
-            <!-- Назад -->
+            
             <Button Grid.Row="2"
                     Content="Назад"
                     Style="{StaticResource MenuButtonStyle}"

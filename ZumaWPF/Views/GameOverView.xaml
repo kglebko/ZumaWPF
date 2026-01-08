@@ -8,16 +8,13 @@
              d:DesignWidth="800">
 
     <Grid>
-        <!-- Фоновая картинка -->
         <Grid.Background>
             <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
-
-        <!-- Затемнение -->
+        
         <Border Background="#99000000"/>
-
-        <!-- Основной контейнер -->
+        
         <Border Background="#2C3E50"
                 Padding="40"
                 CornerRadius="12"
@@ -26,8 +23,7 @@
                 MaxWidth="500">
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                <!-- Заголовок -->
+                
                 <TextBlock Text="ИГРА ОКОНЧЕНА"
                            FontSize="48"
                            FontWeight="Bold"
@@ -35,8 +31,7 @@
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
                            Margin="0,0,0,20"/>
-
-                <!-- Очки -->
+                
                 <TextBlock Name="ScoreText"
                            Text="Очки: 0"
                            FontSize="28"
@@ -45,8 +40,7 @@
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
                            Margin="0,0,0,30"/>
-
-                <!-- Кнопки -->
+                
                 <StackPanel>
                     <Button Content="Повторить"
                             Style="{StaticResource MenuButtonStyle}"

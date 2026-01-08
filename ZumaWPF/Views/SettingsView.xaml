@@ -8,16 +8,13 @@
              d:DesignWidth="800">
 
     <Grid>
-        <!-- Фоновая картинка -->
         <Grid.Background>
             <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <!-- Затемнение -->
         <Border Background="#99000000"/>
-
-        <!-- Основной контейнер -->
+        
         <Border Background="{StaticResource LightBackgroundColor}"
                 Padding="40"
                 CornerRadius="16"
@@ -27,7 +24,6 @@
 
             <StackPanel HorizontalAlignment="Center">
 
-                <!-- Заголовок -->
                 <TextBlock Text="НАСТРОЙКИ"
                            FontSize="48"
                            FontWeight="Bold"
@@ -35,7 +31,6 @@
                            HorizontalAlignment="Center"
                            Margin="0,0,0,30"/>
 
-                <!-- Блок настроек -->
                 <StackPanel Width="320">
 
                     <TextBlock Text="Звук и музыка"
@@ -45,7 +40,6 @@
                                Margin="0,0,0,20"
                                TextAlignment="Center"/>
 
-                    <!-- Музыка -->
                     <CheckBox Name="MusicCheckBox"
                               Content="Фоновая музыка"
                               FontSize="18"
@@ -55,7 +49,6 @@
                               Checked="MusicCheckBox_Checked"
                               Unchecked="MusicCheckBox_Unchecked"/>
 
-                    <!-- Звуки -->
                     <CheckBox Name="SoundCheckBox"
                               Content="Звуковые эффекты"
                               FontSize="18"
@@ -66,8 +59,7 @@
                               Unchecked="SoundCheckBox_Unchecked"/>
 
                 </StackPanel>
-
-                <!-- Кнопка назад -->
+                
                 <Button Content="Назад"
                         Style="{StaticResource MenuButtonStyle}"
                         Click="Back_Click"

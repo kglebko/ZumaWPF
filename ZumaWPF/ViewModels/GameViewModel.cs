@@ -22,7 +22,7 @@ public class GameViewModel : ViewModelBase
     private DispatcherTimer _gameTimer;
     private Ball? _flyingBall;
     private Point _mousePosition;
-    private double _shootAngle; // Угол в момент выстрела
+    private double _shootAngle; 
     
     public GameState GameState { get; private set; }
     public List<Level> Levels { get; private set; }
@@ -72,7 +72,6 @@ public class GameViewModel : ViewModelBase
         GameState.IsVictory = false;
         GameState.IsPaused = false;
         
-        // Position shooter at center of screen (1000x800)
         var shooterPos = new Point(500, 400);
         GameState.Shooter = new Shooter(shooterPos);
         GameState.Shooter.CurrentBall = _gameService.CreateShotBall(shooterPos);
@@ -105,26 +104,16 @@ public class GameViewModel : ViewModelBase
             };
         }).ToList();
         
-        // Restore chain and next ball index
         GameState.Chain = new List<Ball>();
         var ballSpacing = _configService.Config.BallRadius * 2.2;
         GameState.NextBallIndex = saveData.NextBallIndex;
-        
-        // Восстанавливаем цепочку: добавляем шарики, которые уже должны были появиться
-        // Используем NextBallIndex: шарики с индексами от 0 до NextBallIndex-1 должны быть в цепочке
-        // Но нам нужно восстановить только те шарики, которые не были удалены из Chain
-        // Поэтому используем сохраненный NextBallIndex для определения, сколько шариков уже появилось
-        // А затем восстанавливаем цепочку на основе ChainProgress
-        
-        // Восстанавливаем цепочку на основе ChainProgress
-        // Добавляем только те шарики, которые должны были появиться и не были удалены
+
         for (int i = 0; i < GameState.AllBalls.Count && i < saveData.NextBallIndex; i++)
         {
             var spawnDistance = i * ballSpacing;
             if (GameState.ChainProgress >= spawnDistance)
             {
                 var ball = GameState.AllBalls[i];
-                // Добавляем только шарики, которые не были удалены
                 if (!ball.IsDestroyed)
                 {
                     GameState.Chain.Add(ball);
@@ -132,8 +121,6 @@ public class GameViewModel : ViewModelBase
             }
         }
         
-        // Обновляем позиции всех шариков в цепочке
-        // Первый шарик (индекс 0) - самый передний
         for (int i = 0; i < GameState.Chain.Count; i++)
         {
             var ballDistance = GameState.ChainProgress - i * ballSpacing;
@@ -143,7 +130,6 @@ public class GameViewModel : ViewModelBase
             }
         }
         
-        // Position shooter at center of screen (1000x800)
         var shooterPos = new Point(500, 400);
         GameState.Shooter = new Shooter(shooterPos);
         GameState.Shooter.CurrentBall = _gameService.CreateShotBall(shooterPos);
@@ -175,11 +161,9 @@ public class GameViewModel : ViewModelBase
         if (GameState.IsPaused || GameState.IsGameOver || GameState.IsVictory)
             return;
         
-        // Сохраняем угол в момент выстрела
         _shootAngle = GameState.Shooter.Angle;
         
         _flyingBall = GameState.Shooter.CurrentBall;
-        // Устанавливаем начальную позицию шарика в позиции стрелялки
         _flyingBall.Position = GameState.Shooter.Position;
         
         GameState.Shooter.CurrentBall = GameState.Shooter.NextBall;
@@ -200,7 +184,6 @@ public class GameViewModel : ViewModelBase
         {
             GameState.IsPaused = true;
             _gameTimer.Stop();
-            //_audioService.StopBackgroundMusic();
             OnPropertyChanged(nameof(GameState));
         }
     }
@@ -215,7 +198,6 @@ public class GameViewModel : ViewModelBase
     
     public void SaveGame()
     {
-        // Сохраняем текущую игру в рекорды (High Scores)
         if (_userService.CurrentUser != null && GameState.Score > 0)
         {
             _userService.AddHighScore(_userService.CurrentUser.Username, GameState.Score, GameState.CurrentLevel);
@@ -229,14 +211,11 @@ public class GameViewModel : ViewModelBase
         
         var deltaTime = _gameTimer.Interval.TotalMilliseconds;
         
-        // Update chain
         _chainController.UpdateChain(GameState, deltaTime);
         
-        // Update flying ball
         if (_flyingBall != null)
         {
             var speed = 500.0 * deltaTime / 1000.0;
-            // Используем сохраненный угол выстрела, а не текущий угол стрелялки
             var angle = _shootAngle * Math.PI / 180;
             var dx = Math.Cos(angle) * speed;
             var dy = Math.Sin(angle) * speed;
@@ -246,10 +225,8 @@ public class GameViewModel : ViewModelBase
                 _flyingBall.Position.Y + dy
             );
             
-            // Check collision with chain
             if (GameState.ActiveLevel != null && _flyingBall != null)
             {
-                // Check if flying ball is close enough to the path
                 var minDistance = double.MaxValue;
                 Ball? closestBall = null;
                 
@@ -268,16 +245,13 @@ public class GameViewModel : ViewModelBase
                     }
                 }
                 
-                // If close enough to a chain ball, insert it
                 if (closestBall != null && minDistance < _configService.Config.BallRadius * 2)
                 {
                     if (_chainController.TryInsertBall(GameState, _flyingBall, closestBall.Position))
                     {
-                        // Звук комбо будет проигран в ChainController
                     }
                     else
                     {
-                        // Просто попадание без комбо
                         _audioService.PlayHitSound();
                     }
                     _flyingBall = null;
@@ -285,7 +259,6 @@ public class GameViewModel : ViewModelBase
                 }
                 else
                 {
-                    // Check out of bounds (1000x800)
                     if (_flyingBall.Position.X < -50 || _flyingBall.Position.X > 1050 ||
                         _flyingBall.Position.Y < -50 || _flyingBall.Position.Y > 850)
                     {
@@ -299,7 +272,6 @@ public class GameViewModel : ViewModelBase
         if (GameState.IsGameOver)
         {
             _gameTimer.Stop();
-            //_audioService.StopBackgroundMusic();
             if (_userService.CurrentUser != null)
             {
                 _userService.AddHighScore(_userService.CurrentUser.Username, GameState.Score, GameState.CurrentLevel);
@@ -311,7 +283,6 @@ public class GameViewModel : ViewModelBase
         if (GameState.IsVictory)
         {
             _gameTimer.Stop();
-            //_audioService.StopBackgroundMusic();
             if (_userService.CurrentUser != null)
             {
                 _userService.AddHighScore(_userService.CurrentUser.Username, GameState.Score, GameState.CurrentLevel);
@@ -328,7 +299,6 @@ public class GameViewModel : ViewModelBase
     public void Stop()
     {
         _gameTimer.Stop();
-        //_audioService.StopBackgroundMusic();
     }
 }
 

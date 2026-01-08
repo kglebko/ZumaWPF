@@ -7,31 +7,26 @@
              d:DesignHeight="600" d:DesignWidth="800">
 
     <Grid>
-        <!-- Фон -->
         <Grid.Background>
             <ImageBrush ImageSource="/Assets/Images/menu_bg.jpg"
                         Stretch="UniformToFill"/>
         </Grid.Background>
-
-        <!-- Затемнение -->
+        
         <Border Background="#99000000"/>
-
-        <!-- Контент -->
+        
         <Grid Margin="40">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/> <!-- Заголовок -->
-                <RowDefinition Height="*"/>    <!-- Список уровней -->
-                <RowDefinition Height="Auto"/> <!-- Назад -->
+                <RowDefinition Height="Auto"/> 
+                <RowDefinition Height="*"/>    
+                <RowDefinition Height="Auto"/> 
             </Grid.RowDefinitions>
-
-            <!-- Заголовок -->
+            
             <TextBlock Grid.Row="0"
                        Text="Выбор уровня"
                        Style="{StaticResource TitleTextStyle}"
                        Margin="0,40,0,20"
                        HorizontalAlignment="Center"/>
-
-            <!-- Список уровней -->
+            
             <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled">
@@ -39,7 +34,6 @@
                               ItemsSource="{Binding Levels}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <!-- WrapPanel с фиксированным размером элементов -->
                             <WrapPanel HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
                                        ItemWidth="200"
@@ -62,7 +56,6 @@
                 </ItemsControl>
             </ScrollViewer>
 
-            <!-- Назад -->
             <Button Grid.Row="2"
                     Content="Назад"
                     Style="{StaticResource MenuButtonStyle}"

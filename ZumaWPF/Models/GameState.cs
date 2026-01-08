@@ -8,8 +8,8 @@ public class GameState
     public int Score { get; set; }
     public int CurrentLevel { get; set; }
     public List<Ball> Chain { get; set; }
-    public List<Ball> AllBalls { get; set; } // Все шарики для уровня
-    public int NextBallIndex { get; set; } // Индекс следующего шарика для добавления
+    public List<Ball> AllBalls { get; set; }
+    public int NextBallIndex { get; set; }
     public Shooter Shooter { get; set; }
     public Level? ActiveLevel { get; set; }
     public bool IsPaused { get; set; }

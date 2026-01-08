@@ -31,10 +31,8 @@ public class ChainController
         var ballSpacing = _configService.Config.BallRadius * 2.2;
         var path = gameState.ActiveLevel.Path;
         
-        // Увеличиваем прогресс движения цепочки
         gameState.ChainProgress += speed;
         
-        // Добавляем новые шарики в КОНЕЦ цепочки (они появляются в начале пути)
         while (gameState.NextBallIndex < gameState.AllBalls.Count)
         {
             var spawnDistance = gameState.NextBallIndex * ballSpacing;
@@ -52,9 +50,6 @@ public class ChainController
             }
         }
         
-        // Обновляем позиции ВСЕХ шариков в цепочке каждый кадр
-        // Первый шарик (индекс 0) - самый передний, находится на ChainProgress
-        // Каждый следующий шарик отстает на ballSpacing
         for (int i = 0; i < gameState.Chain.Count; i++)
         {
             if (gameState.Chain[i].IsDestroyed)
@@ -64,13 +59,10 @@ public class ChainController
             
             if (ballDistance >= 0 && ballDistance <= path.TotalLength)
             {
-                // ВАЖНО: Обновляем позицию каждый кадр, чтобы шарики двигались
                 gameState.Chain[i].Position = path.GetPointAtDistance(ballDistance);
             }
             else if (ballDistance > path.TotalLength)
             {
-                // Шарик достиг конца пути
-                // Проверяем условие победы: набрано >500 очков
                 if (gameState.Score > 500)
                 {
                     gameState.IsVictory = true;
@@ -83,22 +75,18 @@ public class ChainController
             }
         }
         
-        // Удаляем уничтоженные шарики
         var removedCount = gameState.Chain.RemoveAll(b => b.IsDestroyed);
         
-        // Если были удалены шарики, проверяем каскадные комбо
         if (removedCount > 0)
         {
             CheckCascadeCombos(gameState);
         }
         
-        // Переиндексируем оставшиеся шарики
         for (int i = 0; i < gameState.Chain.Count; i++)
         {
             gameState.Chain[i].Index = i;
         }
         
-        // Проверяем условие победы: все шарики уничтожены И набрано >500 очков
         if (gameState.Chain.Count == 0 && gameState.NextBallIndex >= gameState.AllBalls.Count)
         {
             if (gameState.Score > 500)
@@ -107,14 +95,12 @@ public class ChainController
             }
             else
             {
-                // Недостаточно очков - продолжаем ждать, пока шарики дойдут до конца
             }
         }
     }
     
     private void CheckCascadeCombos(GameState gameState)
     {
-        // Проверяем все возможные комбо после удаления шариков
         bool foundCombo = true;
         
         while (foundCombo)
@@ -131,7 +117,6 @@ public class ChainController
                     var comboSize = 0;
                     var comboColor = gameState.Chain[i].Color;
                     
-                    // Подсчитываем размер комбо
                     for (int j = comboStart.Value; j < gameState.Chain.Count; j++)
                     {
                         if (gameState.Chain[j].Color == comboColor && !gameState.Chain[j].IsDestroyed)
@@ -142,32 +127,27 @@ public class ChainController
                     
                     if (comboSize >= _configService.Config.MinComboSize)
                     {
-                        // Удаляем шарики комбо
                         for (int j = 0; j < comboSize; j++)
                         {
                             if (comboStart.Value + j < gameState.Chain.Count)
                                 gameState.Chain[comboStart.Value + j].IsDestroyed = true;
                         }
                         
-                        // Начисляем очки
                         var score = _gameService.CalculateScore(comboSize);
                         gameState.Score += score;
                         
-                        // Проигрываем звук комбо
                         _audioService?.PlayComboSound();
                         
                         foundCombo = true;
-                        break; // Начинаем проверку заново после удаления
+                        break; 
                     }
                 }
             }
             
-            // Удаляем уничтоженные шарики перед следующей проверкой
             if (foundCombo)
             {
                 gameState.Chain.RemoveAll(b => b.IsDestroyed);
                 
-                // Переиндексируем
                 for (int i = 0; i < gameState.Chain.Count; i++)
                 {
                     gameState.Chain[i].Index = i;
@@ -184,7 +164,6 @@ public class ChainController
         var ballSpacing = _configService.Config.BallRadius * 2.2;
         var path = gameState.ActiveLevel.Path;
         
-        // Находим ближайший шарик к точке попадания
         int closestIndex = -1;
         double minDistance = double.MaxValue;
         
@@ -203,35 +182,28 @@ public class ChainController
             }
         }
         
-        // Проверяем, достаточно ли близко попадание
         if (closestIndex < 0 || minDistance > _configService.Config.BallRadius * 3)
             return false;
         
-        // Вычисляем дистанцию ближайшего шарика от начала пути
         var closestBallDistance = gameState.ChainProgress - closestIndex * ballSpacing;
         
-        // Вставляем шарик ПОСЛЕ ближайшего
         var insertIndex = closestIndex + 1;
         if (insertIndex > gameState.Chain.Count) insertIndex = gameState.Chain.Count;
         
-        // Устанавливаем позицию вставленного шарика на основе дистанции
         shotBall.Position = path.GetPointAtDistance(closestBallDistance);
         gameState.Chain.Insert(insertIndex, shotBall);
         
-        // Переиндексируем
         for (int i = 0; i < gameState.Chain.Count; i++)
         {
             gameState.Chain[i].Index = i;
         }
         
-        // Проверяем комбинации
         var comboStart = _gameService.CheckCombinations(gameState.Chain, insertIndex);
         if (comboStart.HasValue)
         {
             var comboSize = 0;
             var comboColor = gameState.Chain[insertIndex].Color;
             
-            // Подсчитываем размер комбо
             for (int i = comboStart.Value; i < gameState.Chain.Count; i++)
             {
                 if (gameState.Chain[i].Color == comboColor && !gameState.Chain[i].IsDestroyed)
@@ -240,21 +212,17 @@ public class ChainController
                     break;
             }
             
-            // Удаляем шарики комбо
             for (int i = 0; i < comboSize; i++)
             {
                 if (comboStart.Value + i < gameState.Chain.Count)
                     gameState.Chain[comboStart.Value + i].IsDestroyed = true;
             }
-            
-            // Начисляем очки
+
             var score = _gameService.CalculateScore(comboSize);
             gameState.Score += score;
             
-            // Проигрываем звук комбо
             _audioService?.PlayComboSound();
             
-            // Проверяем каскадные комбо после удаления
             gameState.Chain.RemoveAll(b => b.IsDestroyed);
             CheckCascadeCombos(gameState);
             

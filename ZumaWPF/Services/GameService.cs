@@ -21,11 +21,6 @@ public class GameService
     {
         var levels = new List<Level>();
         
-        // Центр экрана: 500, 400 (ширина 1000, высота 800)
-        // Траектория должна идти ВОКРУГ центра, не проходя через него
-        // Минимальное расстояние от центра: 150 пикселей
-        
-        // Level 1 - Волна (простая закорючка вокруг центра)
         var level1Path = new GamePath(new List<Point>
         {
             new Point(100, 200),
@@ -46,7 +41,6 @@ public class GameService
         });
         levels.Add(new Level(1, "Волна", level1Path, _configService.Config.DefaultBallSpeed, "level1.jpg", 40));
         
-        // Level 2 - Спираль (не очень сложная, вокруг центра)
         var level2Path = new GamePath(new List<Point>
         {
             new Point(150, 100),
@@ -68,22 +62,14 @@ public class GameService
         });
         levels.Add(new Level(2, "Спираль", level2Path, _configService.Config.DefaultBallSpeed * 1.2, "level2.jpg", 45));
         
-        // Level 3 - Змейка (как в примере, но с координатами для 1000x800)
         var level3Path = new GamePath(new List<Point>
         {
-            // Нижняя широкая часть
             new Point(150, 650),
             new Point(850, 650),
-            
-            // Средний уровень, большой зигзаг
             new Point(850, 550),
             new Point(150, 550),
-            
-            // Верхняя часть
             new Point(150, 350),
             new Point(850, 350),
-            
-            // Верхняя линия
             new Point(850, 100),
             new Point(150, 100)
         });
@@ -103,7 +89,6 @@ public class GameService
         var chain = new List<Ball>();
         var ballSpacing = _configService.Config.BallRadius * 2.2;
         
-        // Генерируем все шарики заранее с фиксированными цветами
         for (int i = 0; i < level.InitialBallCount; i++)
         {
             var color = GetRandomBallColor();
@@ -131,11 +116,9 @@ public class GameService
         var comboStart = insertIndex;
         var comboEnd = insertIndex;
         
-        // Проверяем влево
         while (comboStart > 0 && !chain[comboStart - 1].IsDestroyed && chain[comboStart - 1].Color == targetColor)
             comboStart--;
         
-        // Проверяем вправо
         while (comboEnd < chain.Count - 1 && !chain[comboEnd + 1].IsDestroyed && chain[comboEnd + 1].Color == targetColor)
             comboEnd++;
         
